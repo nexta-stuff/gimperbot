@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <StartupObject>gimperbot.program</StartupObject>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <Deterministic>False</Deterministic>
+    <Authors>taiga1337</Authors>
+    <VersionPrefix>0.2.11</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="90.0.4430.2400" />
+  </ItemGroup>
+
+</Project>
