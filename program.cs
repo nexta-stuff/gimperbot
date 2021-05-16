@@ -5,7 +5,7 @@ namespace gimperbot {
 
 	internal class program {
 
-		public static void update_window( browser webdriver ) {
+		public static void update_window( seleniumwrapper webdriver ) {
 			string app_version = utils.get_version( );
 			Console.WriteLine( $"gimperbot {app_version} by Taiga#5769" );
 
@@ -15,16 +15,15 @@ namespace gimperbot {
 			}
 		}
 
-		public static void update_facebook( browser webdriver ) {
+		public static void update_facebook( seleniumwrapper webdriver ) {
 			const string p = "[gimperbot-facebook]";
 			message.send_success( p, "started facebook thread" );
 
 			while( true ) {
-				int timeout = 30000; // CONFIG
+				int timeout = 60000; // CONFIG
 				message.send( p, $"checking in {timeout / 1000} seconds" ); // TODO bo bedzie config
 				Thread.Sleep( timeout ); // todo kurwa
 
-				message.send( p, "rechecking..." );
 				message.send( p, $"newest post:\n\"{webdriver.get_latest_post( )}\"" );
 				if( webdriver.check_for_new_posts( ) ) {
 					message.send_information( p, $"new post is different, posting comment:\n\"{webdriver.comment_message}\"" );
@@ -43,7 +42,7 @@ namespace gimperbot {
 			/* KURWA JEBAC INI zmien na toml pozniej */
 
 			/* initialize facebook */
-			browser facebook = new browser( );
+			seleniumwrapper facebook = new seleniumwrapper( );
 			facebook.comment_message = "Gimper Gimper sraka cię robiła gimperowa sraka cię robiła tata gimpera śpiewa tak kto ma na nazwisko Gimper wypierdala z teamuuuuuuuuuuuu uuuuuuuuuuuuuuuu"; // TODO CONFIG
 			facebook.webdriver_url = "https://mbasic.facebook.com/GimperOfficial?v=timeline"; // TODO CONFIG
 			facebook.initialize( );
