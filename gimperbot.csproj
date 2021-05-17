@@ -7,7 +7,7 @@
     <StartupObject>gimperbot.program</StartupObject>
     <NoWin32Manifest>true</NoWin32Manifest>
     <Authors>taiga1337</Authors>
-    <Version>0.4.1-preview2</Version>
+    <Version>0.4.3-preview4</Version>
     <ApplicationIcon>resource\gimper.ico</ApplicationIcon>
   </PropertyGroup>
 
