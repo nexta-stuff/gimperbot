@@ -57,14 +57,14 @@ namespace gimperbot {
 			/* load config - important */
 			initialize_config("gimperbot_config.toml");
 
-			/* initialize selenium webdriver */
+			/* start initialize selenium webdriver */
+			Console.WriteLine("--------------------------------\n[gimperbot-main] initializing chromedriver");
 			seleniumwrapper facebook = new seleniumwrapper();
 			facebook.comment_message = config[(int) loader.type.MESSAGE]; // Loaded from config
 			facebook.webdriver_url = config[(int) loader.type.URL]; // Loaded from config
 			facebook.initialize();
-
-			/* clear the chrome logging stuff */
-			message.clear_chrome_logging_crap();
+			Console.WriteLine("[gimperbot-main] finished\n--------------------------------");
+			/* end initialize selenium webdriver */
 
 			/* start window thread */
 			Thread window_thread = new Thread(() => update_window(facebook));
@@ -75,13 +75,13 @@ namespace gimperbot {
 			while (facebook.check_if_on_login_page()) {
 				Thread.Sleep(2000);
 			}
+			
+			/* this is my final message change da world goodbye */
+			message.send_success(pm, "login was successful, starting facebook thread");
 
 			/* start facebook thread */
 			Thread facebook_thread = new Thread(() => update_facebook(facebook));
 			facebook_thread.Start();
-
-			/* this is my final message change da world goodbye */
-			message.send_success(pm, "login was successful, starting facebook thread");
 		}
 	}
 }

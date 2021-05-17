@@ -38,7 +38,9 @@ namespace gimperbot {
 				webdriver_title = webdriver.Title;
 			}
 			catch (Exception ex) {
-				message.send_error(p, $"initialize() failed: {ex.Message}");
+				message.send_error(p, $"fatal crash: initialize() failed: {ex.Message}");
+				System.Threading.Thread.Sleep(3000);
+				Environment.Exit(-1);
 			}
 		}
 
@@ -53,8 +55,8 @@ namespace gimperbot {
 		}
 
 		// chujoza jakas nie dziala pierdole to
-		public bool check_if_open() {
-			return (String.IsNullOrEmpty(webdriver.CurrentWindowHandle));
+		public bool is_open() {
+			return (webdriver.Title != null);
 		}
 
 		public void post_comment() {

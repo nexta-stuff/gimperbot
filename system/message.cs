@@ -27,13 +27,6 @@ namespace gimperbot {
 			Console.WriteLine($"{prefix}: {message}");
 			Console.ResetColor();
 		}
-		// Deletes last 3 lines that google chrome spits out in the console
-		public static void clear_chrome_logging_crap() {
-			for (int i = 0; i < 3; ++i) {
-				Console.SetCursorPosition(0, Console.CursorTop - i);
-				Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-			}
-		}
 
 		public static void watermark(string app_version) {
 			Console.ForegroundColor = ConsoleColor.Magenta;
