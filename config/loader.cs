@@ -52,7 +52,7 @@ namespace gimperbot.config {
 				// i cant figure this fucking api out, so...
 				result.Add(configuration["gimperbot"]["message"]);
 				result.Add(configuration["gimperbot"]["url"]);
-				result.Add(configuration["gimperbot"]["timeout"]);
+				result.Add(configuration["gimperbot"]["timeout"]); // I wish i could parse the timeout as string instead, i know theres a way but i cant be bothered to look at the documentation :(
 			}
 
 			message.send_success(p, $"loaded configuration file \"{config_file}\" successfully!");
