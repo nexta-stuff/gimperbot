@@ -1,9 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
+using gimperbot.config;
 
 namespace gimperbot {
 
 	internal class program {
+		static List<string> config;
+		const string pf = "[gimperbot-facebook]";
+		const string pm = "[gimperbot-main]";
+
+		public static void initialize_config( string config_file ) {
+			if( System.IO.File.Exists( config_file ) ) {
+				config = loader.load_config( config_file );
+			}
+			else {
+				loader.write_default_config( config_file );
+				initialize_config( config_file ); // recursive o nie!!
+			}
+		}
 
 		public static void update_window( seleniumwrapper webdriver ) {
 			string app_version = utils.get_version( );
@@ -16,35 +31,32 @@ namespace gimperbot {
 		}
 
 		public static void update_facebook( seleniumwrapper webdriver ) {
-			const string p = "[gimperbot-facebook]";
-			message.send_success( p, "started facebook thread" );
+			message.send_success( pf, "started facebook thread" );
+			int timeout = ( int.Parse( config[ ( int )loader.type.TIMEOUT ] ) ) * 1000; // config
 
 			while( true ) {
-				int timeout = 60000; // CONFIG
-				message.send( p, $"checking in {timeout / 1000} seconds" ); // TODO bo bedzie config
-				Thread.Sleep( timeout ); // todo kurwa
+				message.send( pf, $"checking in {timeout / 1000} seconds" );
+				Thread.Sleep( timeout );
 
-				message.send( p, $"newest post:\n\"{webdriver.get_latest_post( )}\"" );
+				message.send( pf, $"newest post:\n\"{webdriver.get_latest_post( )}\"" );
 				if( webdriver.check_for_new_posts( ) ) {
-					message.send_information( p, $"new post is different, posting comment:\n\"{webdriver.comment_message}\"" );
+					message.send_information( pf, $"new post is different, posting comment:\n\"{webdriver.comment_message}\"" );
 					webdriver.post_comment( );
 				}
 				else {
-					message.send_error( p, $"post already exists in post history" );
+					message.send_error( pf, $"post already exists in post history" );
 				}
 			}
 		}
 
 		private static void Main( string[ ] args ) {
-			Console.Title = "gimperbot initializing";
-			const string p = "[gimperbot-main]";
-
-			/* KURWA JEBAC INI zmien na toml pozniej */
+			/* load config - important */
+			initialize_config( "gimperbot_config.toml" );
 
 			/* initialize facebook */
 			seleniumwrapper facebook = new seleniumwrapper( );
-			facebook.comment_message = "Gimper Gimper sraka cię robiła gimperowa sraka cię robiła tata gimpera śpiewa tak kto ma na nazwisko Gimper wypierdala z teamuuuuuuuuuuuu uuuuuuuuuuuuuuuu"; // TODO CONFIG
-			facebook.webdriver_url = "https://mbasic.facebook.com/GimperOfficial?v=timeline"; // TODO CONFIG
+			facebook.comment_message = config[ ( int )loader.type.MESSAGE ]; // config
+			facebook.webdriver_url = config[ ( int )loader.type.URL ]; // config 
 			facebook.initialize( );
 
 			Console.Clear( ); // hide the logging stuff
@@ -56,7 +68,7 @@ namespace gimperbot {
 			Thread.Sleep( 250 ); // Small delay because login message appears before the version string
 
 			/* wait for login */
-			message.send_information( p, "log in to your facebook account to continue" );
+			message.send_information( pm, "log in to your facebook account to continue" );
 			while( facebook.check_if_on_login_page( ) ) {
 				Thread.Sleep( 2000 );
 			}
@@ -66,7 +78,7 @@ namespace gimperbot {
 			facebook_thread.Start( );
 
 			/* final message */
-			message.send_success( p, "login was successful, starting facebook thread" );
+			message.send_success( pm, "login was successful, starting facebook thread" );
 		}
 	}
 }
