@@ -39,7 +39,7 @@ namespace gimperbot {
 			}
 			catch (Exception ex) {
 				message.send_error(p, $"fatal crash: initialize() failed: {ex.Message}");
-				System.Threading.Thread.Sleep(3000);
+				System.Threading.Thread.Sleep(5000);
 				Environment.Exit(-1);
 			}
 		}
