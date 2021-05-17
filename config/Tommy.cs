@@ -36,6 +36,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Tommy {
+
 	#region TOML Nodes
 
 	public abstract class TomlNode : IEnumerable {

@@ -4,6 +4,7 @@ using System.IO;
 using Tommy;
 
 namespace gimperbot.config {
+
 	internal class loader {
 		private static string p = "[gimperbot.config-loader]";
 

@@ -1,17 +1,17 @@
-﻿using System;
+﻿using gimperbot.config;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
-using gimperbot.config;
-
 namespace gimperbot {
+
 	internal class program {
 		private static List<string> config;
 		private static string app_version = utils.get_version();
 		private const string pf = "[gimperbot-facebook]";
 		private const string pm = "[gimperbot-main]";
 
-		public static void initialize_config(string config_file) {
+		private static void initialize_config(string config_file) {
 			if (System.IO.File.Exists(config_file)) {
 				config = loader.load_config(config_file);
 			}
@@ -21,18 +21,14 @@ namespace gimperbot {
 			}
 		}
 
-		public static void update_window(seleniumwrapper webdriver) {
-			Console.ForegroundColor = ConsoleColor.Magenta;
-			Console.WriteLine($"gimperbot {app_version} by Taiga#5769");
-			Console.ResetColor();
-
+		private static void update_window(seleniumwrapper webdriver) { // This only updates the uptime. Not very useful, might get deprecated
 			while (true) {
 				Thread.Sleep(1000);
 				Console.Title = $"gimperbot {app_version} / uptime: {utils.get_uptime()} / page: {webdriver.webdriver_url}";
 			}
 		}
 
-		public static void update_facebook(seleniumwrapper webdriver) {
+		private static void update_facebook(seleniumwrapper webdriver) { // Facebook thread, used for posting the comment
 			message.send_success(pf, "started facebook thread");
 			int timeout = (int.Parse(config[(int) loader.type.TIMEOUT])) * 1000; // config
 
@@ -52,6 +48,8 @@ namespace gimperbot {
 		}
 
 		private static void Main(string[] args) {
+			message.watermark(app_version); // da bo$$' most importante part
+
 			/* load config - important */
 			initialize_config("gimperbot_config.toml");
 
@@ -61,7 +59,7 @@ namespace gimperbot {
 			facebook.webdriver_url = config[(int) loader.type.URL]; // config
 			facebook.initialize();
 
-			Console.Clear(); // hide the logging stuff
+			message.clear_chrome_logging_crap();
 
 			/* start window thread */
 			Thread window_thread = new Thread(() => update_window(facebook));
@@ -70,7 +68,7 @@ namespace gimperbot {
 			Thread.Sleep(250); // Small delay because login message appears before the version string
 
 			/* wait for login */
-			message.send_information(pm, "log in to your facebook account to continue");
+			message.send_information(pm, "login with your facebook account to continue");
 			while (facebook.check_if_on_login_page()) {
 				Thread.Sleep(2000);
 			}

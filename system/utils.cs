@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.Reflection;
 
 namespace gimperbot {
+
 	internal class utils {
+
 		public static string get_uptime() {
 			return (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString(@"hh\:mm\:ss");
 		}

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
 using System.Collections.Generic;
 
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-
 namespace gimperbot {
+
 	internal class seleniumwrapper {
 		private IWebDriver webdriver;
 		public string webdriver_url { get; set; }
