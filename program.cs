@@ -1,4 +1,6 @@
 ﻿using gimperbot.config;
+using gimperbot.selenium;
+using gimperbot.system;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -31,7 +33,8 @@ namespace gimperbot {
 		}
 
 		/* Facebook thread, used for checking for new posts & posting the comment in case there's a new post that wasn't seen yet @ facebook.post_history */
-		private static void update_facebook(seleniumwrapper webdriver) { 
+
+		private static void update_facebook(seleniumwrapper webdriver) {
 			message.send_success(pf, "started facebook thread");
 			int timeout = (int.Parse(config[(int) loader.type.TIMEOUT])) * 1000; // Loaded from config
 
@@ -52,7 +55,7 @@ namespace gimperbot {
 
 		private static void Main(string[] args) {
 			/* da bo$$' most importante part */
-			message.watermark(app_version); 
+			message.watermark(app_version);
 
 			/* load config - important */
 			initialize_config("gimperbot_config.toml");
@@ -75,7 +78,7 @@ namespace gimperbot {
 			while (facebook.check_if_on_login_page()) {
 				Thread.Sleep(2000);
 			}
-			
+
 			/* this is my final message change da world goodbye */
 			message.send_success(pm, "login was successful, starting facebook thread");
 

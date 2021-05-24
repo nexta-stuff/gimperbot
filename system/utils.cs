@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace gimperbot {
+namespace gimperbot.system {
 
 	internal class utils {
 

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using gimperbot.system;
+using System.Collections.Generic;
 using System.IO;
-
 using Tommy;
 
 namespace gimperbot.config {
