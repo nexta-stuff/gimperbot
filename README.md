@@ -10,7 +10,4 @@ postuje smieszny komentarz pod postami gimpera
 # todo
 - wiecej opcji konfiguracji (np, ukrycie okna chrome, auto-login)
 
-# q&a
-- kurwa czemu sa komentarze po angielsku w wiekszosci miejscach a w niektorych po polsju
-> bo tak
-pozdrawiam gimpera
+spierdalaj
