@@ -17,12 +17,12 @@ namespace gimperbot.selenium {
 
 		public void initialize() {
 			try {
-				/* wylacz logging */
+				/* turn off logging */
 				ChromeDriverService service = ChromeDriverService.CreateDefaultService();
 				service.SuppressInitialDiagnosticInformation = true;
 				service.EnableVerboseLogging = false;
 
-				/* wylacz wiecej pierdol */
+				/* turn off logging pt2 */
 				ChromeOptions options = new ChromeOptions();
 				options.PageLoadStrategy = PageLoadStrategy.Normal;
 				options.AddArgument("--disable-gpu");
@@ -33,7 +33,7 @@ namespace gimperbot.selenium {
 				options.AddArgument("--disable-dev-shm-usage");
 				options.AddArgument("--log-level=3");
 
-				/* wlacz chrome z opcjami */
+				/* startup chrome with parameters specified above */
 				webdriver = new ChromeDriver(service, options);
 				webdriver.Url = webdriver_url;
 				webdriver_title = webdriver.Title;
@@ -55,21 +55,22 @@ namespace gimperbot.selenium {
 			}
 		}
 
-		// chujoza jakas nie dziala pierdole to
+		// doesn't work
 		public bool is_open() {
 			return (webdriver.Title != null);
 		}
 
 		public void post_comment() {
 			try {
-				post_history.Add(get_latest_post()); // najpierw dodaj post zebys juz na nim nie komentowal pozniej
+				post_history.Add(get_latest_post()); // add the current post to the post history to avoid commenting on a post more than once
 
-				webdriver.FindElement(By.PartialLinkText("Liczba komentarzy")).Click(); // kliknij na pierwsze "liczba komentarzy: xx"
-				webdriver.FindElement(By.CssSelector("textarea[name='comment_text']")).SendKeys(comment_message); // wpierdol do text area nasz tekst pogchamp
-				webdriver.FindElement(By.CssSelector("input[type='submit']")).Click(); // kliknij na "wyslij"
-				webdriver.Url = webdriver_url; // wroc spowrotem na strone (tak jakby odswieza tutaj zamiast w check_for_new_posts( ) bo inaczej nie wykrywa postu na stronie)
+				webdriver.FindElement(By.PartialLinkText("Liczba komentarzy")).Click(); // click on the first "liczba komentarzy: xx", 
+													// i should change this bc it doesnt work on the english version of the page
+				webdriver.FindElement(By.CssSelector("textarea[name='comment_text']")).SendKeys(comment_message); // insert the text into the textarea
+				webdriver.FindElement(By.CssSelector("input[type='submit']")).Click(); // click on the 'send' button
+				webdriver.Url = webdriver_url; // go back to the main page (kind of a refresh I guess?)
 
-				message.send_success(p, "post_comment(): posted comment successfully!"); // wiadomosc:)
+				message.send_success(p, "post_comment(): posted comment successfully!"); // logging
 			}
 			catch (Exception ex) {
 				message.send_error(p, $"post_comment() failed: {ex.Message}");
@@ -78,7 +79,7 @@ namespace gimperbot.selenium {
 
 		public string get_latest_post() {
 			try {
-				// XDDDD tak inspector powiedzial to tak jest
+				// this is bad
 				return webdriver.FindElement(By.XPath("/html/body/div/div/div[2]/div/div[1]/div[2]/div[2]/div/section/article[1]/div/div[1]/div/span/p")).Text.ToString();
 			}
 			catch (Exception ex) {
@@ -87,7 +88,7 @@ namespace gimperbot.selenium {
 			}
 		}
 
-		public bool check_for_new_posts() { // panie boze pomuz mi prosze
+		public bool check_for_new_posts() { // this was painful to get working
 			try {
 				for (int i = 0; i < post_history.Count; ++i) {
 					if (post_history[i] == get_latest_post()) {
@@ -101,6 +102,6 @@ namespace gimperbot.selenium {
 				message.send_error(p, $"check_for_new_posts() failed: {ex.Message}");
 				return false;
 			}
-		} // chyba dzialaaXDDD jebana kurwica
+		}
 	}
 }
