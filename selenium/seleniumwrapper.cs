@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 
 namespace gimperbot.selenium {
-
+	// I still can't do OOP properly :(
 	internal class seleniumwrapper {
 		private IWebDriver webdriver;
 		public string webdriver_url { get; set; }
