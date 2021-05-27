@@ -1,13 +1,11 @@
-# gimperbocik
-postuje smieszny komentarz pod postami gimpera
+# gimperbot
+Automatically comments a message under new facebook posts from a page, both defined in a config file.
 
-# build tools
-- vs 2019 community
-- net 5.0 standard
-- nuget: msbump, selenium.webdriver, selenium.webdriver.chromedriver
-- prawdopodobnie kompiluje sie w x86 / x64
+# Build tools
+- Visual Studio 2019 Community
+- NET 5.0
+- NuGet: MSBump, Selenium.WebDriver, Selenium.WebDriver.ChromeDriver
+- Compiles both in x86 and x64
 
-# todo
-- wiecej opcji konfiguracji (np, ukrycie okna chrome, auto-login)
-
-spierdalaj
+# TODO
+- More configuration options, such as headless mode and auto-login.
