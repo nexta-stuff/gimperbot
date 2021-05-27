@@ -54,7 +54,6 @@ namespace gimperbot {
 		}
 
 		private static void Main(string[] args) {
-			/* da bo$$' most importante part */
 			message.watermark(app_version);
 
 			/* load config - important */
@@ -79,7 +78,6 @@ namespace gimperbot {
 				Thread.Sleep(2000);
 			}
 
-			/* this is my final message change da world goodbye */
 			message.send_success(pm, "login was successful, starting facebook thread");
 
 			/* start facebook thread */
