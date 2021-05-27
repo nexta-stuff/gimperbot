@@ -5,7 +5,7 @@ Small project I made for fun - automatically comments a message under new facebo
 - Visual Studio 2019 Community
 - NET 5.0
 - NuGet: MSBump, Selenium.WebDriver, Selenium.WebDriver.ChromeDriver
-- Tommy.cs from
+- Tommy.cs from https://github.com/dezhidki/Tommy
 - Compiles both in x86 and x64
 
 # TODO
