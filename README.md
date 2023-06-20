@@ -1,5 +1,5 @@
 # gimperbot
-Small project I made for fun - automatically comments a message under new facebook posts from a page, both defined in a config file.
+Automatically comments a message under new facebook posts from a page, both defined in a config file.
 
 # Build tools
 - Visual Studio 2019 Community
